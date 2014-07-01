@@ -93,7 +93,7 @@ public class ANTContext {
 				conf.setStrings("ant.dump.output", output);
 
 				conf.setStrings("hadoop.native.lib", "true");
-				//conf.setStrings("mapred.job.tracker", "10.13.1.76:8021");
+				conf.setStrings("mapred.job.tracker", "10.13.1.76:8021");
 
 				Iterator<String> confKeys = config.getKeys(prefix + ".config");
 				while (confKeys.hasNext()) {

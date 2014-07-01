@@ -48,7 +48,7 @@
 		<mrunit.version>1.0.0</mrunit.version>
 		<mockito-all.version>1.9.5</mockito-all.version>
 		<mongo-java-driver.version>2.11.3</mongo-java-driver.version>
-		<mongo-hadoop-core.version>2.0.0-cdh4.2.0</mongo-hadoop-core.version>
+		<mongo-hadoop-core.version>2.0.0-cdh4.5.0</mongo-hadoop-core.version>
 		<mysql-connector-java.version>5.1.26</mysql-connector-java.version>
 
 		<pinyin4j.version>2.5.0</pinyin4j.version>
@@ -364,7 +364,7 @@
 				<artifactId>joda-time</artifactId>
 				<version>${joda-time.version}</version>
 			</dependency>
-
+			<!--  
 			<dependency>
 				<groupId>jdk.tools</groupId>
 				<artifactId>jdk.tools</artifactId>
@@ -372,6 +372,7 @@
 				<scope>system</scope>
 				<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
 			</dependency>
+			-->
 
 
 			<!-- third part -->
