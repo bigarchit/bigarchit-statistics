@@ -26,8 +26,8 @@ import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
 
-public class MongoDBMapping_2_0 implements Dumper<Text, BSONObject> {
-	private static final Logger logger = Logger.getLogger(MongoDBMapping_2_0.class);
+public class DefaultMapping implements Dumper<Text, BSONObject> {
+	private static final Logger logger = Logger.getLogger(DefaultMapping.class);
 
 	private String name;
 
@@ -143,7 +143,7 @@ public class MongoDBMapping_2_0 implements Dumper<Text, BSONObject> {
 				
 				String collection = database + "_" + type + "_" + datetime.length() + "_" + dem1 + "_" + dem2;
 				
-				String uri = conf.get(DUMPContext.MONGODBMAPPING_MONGO_URI_KEY) + "/la2test." + collection;
+				String uri = conf.get(DUMPContext.MONGODBMAPPING_MONGO_URI_KEY) + "/" + database + "." + collection;
 				MongoURI mongoURI = new MongoURI(uri);
 	
 				logger.info("creating " + mongoURI);
