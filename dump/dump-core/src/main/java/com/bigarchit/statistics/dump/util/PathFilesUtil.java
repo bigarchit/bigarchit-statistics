@@ -37,7 +37,7 @@ public class PathFilesUtil {
 				deletetags.addAll(clearTags(hdfs, tagPrefix, file.getPath()));
 			} else {
 				String filename = file.getPath().toString();
-				if(filename.indexOf("_" + tagPrefix.toUpperCase() + "_DUMP") > -1){
+				if(filename.indexOf(tagPrefix.toUpperCase() + "_DUMPED") > -1){
 					hdfs.deleteOnExit(file.getPath());
 					deletetags.add(filename);
 				}
@@ -72,8 +72,8 @@ public class PathFilesUtil {
 				if (filename.endsWith("_SUCCESS")) {
 					String home = filename.substring(0, filename.length() - 8);
 					List<String> fns = listPahFiles(hdfs, path);
-					if(!fns.contains("_" + tagPrefix.toUpperCase() + "_DUMP")){
-						FSDataOutputStream out = hdfs.create(new Path(home + "/_" + tagPrefix.toUpperCase() + "_DUMP"), true);
+					if(!fns.contains(tagPrefix.toUpperCase() + "_DUMPED")){
+						FSDataOutputStream out = hdfs.create(new Path(home + "/" + tagPrefix.toUpperCase() + "_DUMPED"), true);
 						out.close();
 						addtags.add(home);
 					}
@@ -115,7 +115,7 @@ public class PathFilesUtil {
 				if (filename.endsWith("_SUCCESS")) {
 					String pathfix = filename.substring(filename.indexOf("/", filename.indexOf("://") + 3), filename.length() - 8);
 					List<String> fns = listPahFiles(hdfs, path);
-					if (!fns.contains("_" + tagPrefix.toUpperCase() + "_DUMP")) {
+					if (!fns.contains(tagPrefix.toUpperCase() + "_DUMPED")) {
 						PathFiles pf = new PathFiles(path.toString(), pathfix, fns);
 						pathfiles.add(pf);
 					}

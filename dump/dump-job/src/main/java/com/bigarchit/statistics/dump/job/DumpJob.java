@@ -77,7 +77,7 @@ public class DumpJob {
 					
 					if(job != null){
 						job.waitForCompletion(true);
-						FSDataOutputStream out = hdfs.create(new Path(pf.path + "/_" + dumper.getName().toUpperCase() + "_DUMPED"), true);
+						FSDataOutputStream out = hdfs.create(new Path(pf.path + "/" + dumper.getName().toUpperCase() + "_DUMPED"), true);
 						out.close();
 					}
 					dumper.afterProcessPath(pf);
