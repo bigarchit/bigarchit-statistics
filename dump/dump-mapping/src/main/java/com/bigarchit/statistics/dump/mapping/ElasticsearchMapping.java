@@ -4,13 +4,12 @@ import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.InputFormat;
-import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.OutputFormat;
 
+import com.bigarchit.statistics.dump.Dumper;
 import com.bigarchit.statistics.dump.KVPair;
 import com.bigarchit.statistics.dump.PathFiles;
-import com.bigarchit.statistics.dump.inf.Dumper;
 
 public class ElasticsearchMapping implements Dumper<Text, Object>{
 

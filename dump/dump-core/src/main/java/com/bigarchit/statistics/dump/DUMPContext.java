@@ -16,8 +16,6 @@ import org.apache.hadoop.mapreduce.InputFormat;
 import org.apache.hadoop.mapreduce.OutputFormat;
 import org.apache.log4j.Logger;
 
-import com.bigarchit.statistics.dump.inf.Dumper;
-
 public class DUMPContext {
 	private static final Logger logger = Logger.getLogger(DUMPContext.class);
 

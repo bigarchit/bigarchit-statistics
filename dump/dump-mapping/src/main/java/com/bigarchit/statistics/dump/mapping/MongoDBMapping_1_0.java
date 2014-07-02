@@ -18,9 +18,9 @@ import org.bson.BasicBSONObject;
 import org.bson.types.ObjectId;
 
 import com.bigarchit.statistics.dump.DUMPContext;
+import com.bigarchit.statistics.dump.Dumper;
 import com.bigarchit.statistics.dump.KVPair;
 import com.bigarchit.statistics.dump.PathFiles;
-import com.bigarchit.statistics.dump.inf.Dumper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;

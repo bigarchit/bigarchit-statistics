@@ -8,8 +8,8 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.log4j.Logger;
 
 import com.bigarchit.statistics.dump.DUMPContext;
+import com.bigarchit.statistics.dump.Dumper;
 import com.bigarchit.statistics.dump.KVPair;
-import com.bigarchit.statistics.dump.inf.Dumper;
 
 public class DefaultMapper extends Mapper<Text, Text, Object, Object> {
 	

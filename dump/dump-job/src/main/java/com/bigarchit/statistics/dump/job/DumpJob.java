@@ -14,8 +14,8 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.log4j.Logger;
 
 import com.bigarchit.statistics.dump.DUMPContext;
+import com.bigarchit.statistics.dump.Dumper;
 import com.bigarchit.statistics.dump.PathFiles;
-import com.bigarchit.statistics.dump.inf.Dumper;
 import com.bigarchit.statistics.dump.map.DefaultMapper;
 import com.bigarchit.statistics.dump.util.PathFilesUtil;
 
