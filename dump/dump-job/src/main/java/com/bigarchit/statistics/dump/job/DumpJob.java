@@ -1,6 +1,5 @@
-package com.bigarchit.statistics.dump;
+package com.bigarchit.statistics.dump.job;
 
-import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 import java.util.Set;
@@ -8,11 +7,16 @@ import java.util.Set;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.Job;
-import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.log4j.Logger;
 
+import com.bigarchit.statistics.dump.DUMPContext;
+import com.bigarchit.statistics.dump.PathFiles;
+import com.bigarchit.statistics.dump.inf.Dumper;
+import com.bigarchit.statistics.dump.map.DefaultMapper;
 import com.bigarchit.statistics.dump.util.PathFilesUtil;
 
 public class DumpJob {
@@ -20,7 +24,7 @@ public class DumpJob {
 
 	private static FileSystem hdfs;
 
-	private static List<Dumper<Object, Object>> dumpers = ANTContext.get().getDumpers();
+	private static List<Dumper<Object, Object>> dumpers = DUMPContext.get().getDumpers();
 
 	public static void setDumpers(List<Dumper<Object, Object>> dumpers) {
 		DumpJob.dumpers = dumpers;
@@ -28,31 +32,6 @@ public class DumpJob {
 
 	public static void setHdfs(FileSystem hdfs) {
 		DumpJob.hdfs = hdfs;
-	}
-
-	public static class ANTDumpMapper extends Mapper<Text, Text, Object, Object> {
-		@Override
-		protected void setup(Context context) throws IOException, InterruptedException {
-		}
-
-		@Override
-		protected void cleanup(Context context) throws IOException, InterruptedException {
-		}
-
-		@Override
-		public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
-			for (Dumper<Object, Object> dumper : dumpers) {
-				try {
-					KVPair<Object, Object> kv = dumper.write(key, value, context);
-					if (kv != null) {
-						context.write(kv.key, kv.value);
-						context.getCounter("", "writeLine").increment(1);
-					}
-				} catch (Exception e) {
-					logger.error("error", e);
-				}
-			}
-		}
 	}
 
 	public void run() throws Exception {
@@ -81,11 +60,24 @@ public class DumpJob {
 				try{
 					logger.info("scan " + pf);
 					dumper.beforeProcessPath(pf);
-					Job job = dumper.getJob(pf);
+					Job job = new Job(dumper.getConfig(), String.format("%s %s dumper", dumper.getName(), pf.path));
+					job.setNumReduceTasks(0);
+			
+					job.setJarByClass(DumpJob.class);
+					job.setMapperClass(DefaultMapper.class);
+			
+					job.setOutputKeyClass(Writable.class);
+					job.setOutputValueClass(Writable.class);
+			
+					job.setInputFormatClass(dumper.getInputFormat());
+					job.setOutputFormatClass(dumper.getOutputFormat());
+			
+					FileInputFormat.addInputPath(job, new Path(pf.path));
+					FileOutputFormat.setOutputPath(job, new Path(dumper.getOutput()));
 					
 					if(job != null){
 						job.waitForCompletion(true);
-						FSDataOutputStream out = hdfs.create(new Path(pf.path + "/_" + dumper.getName().toUpperCase() + "_DUMP"), true);
+						FSDataOutputStream out = hdfs.create(new Path(pf.path + "/_" + dumper.getName().toUpperCase() + "_DUMPED"), true);
 						out.close();
 					}
 					dumper.afterProcessPath(pf);

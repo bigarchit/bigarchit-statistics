@@ -1,4 +1,4 @@
-package com.bigarchit.statistics.dump;
+package com.bigarchit.statistics.dump.inf;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.io.Text;
@@ -7,6 +7,9 @@ import org.apache.hadoop.mapreduce.InputFormat;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.OutputFormat;
+
+import com.bigarchit.statistics.dump.KVPair;
+import com.bigarchit.statistics.dump.PathFiles;
 
 public interface Dumper<Key, Value> {
 
@@ -36,8 +39,6 @@ public interface Dumper<Key, Value> {
 	
 	void beforeProcess();
 	void beforeProcessPath(PathFiles pf);
-
-	Job getJob(PathFiles pf);
 	
 	KVPair<Key, Value> write(Text key, Text value, Mapper<Text, Text, Key, Value>.Context context);
 	

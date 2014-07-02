@@ -53,8 +53,7 @@ public class PathFiles {
 
 	@Override
 	public String toString() {
-		return "PathFiles [path=" + path + ", pathfix=" + pathfix
-				+ ", filenames=" + filenames + "]";
+		return "PathFiles [path=" + path + ", pathfix=" + pathfix + ", filenames=" + filenames + "]";
 	}
 
 }

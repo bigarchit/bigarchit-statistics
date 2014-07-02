@@ -1,4 +1,4 @@
-package com.bigarchit.statistics.dump;
+package com.bigarchit.statistics.dump.job;
 
 import org.apache.hadoop.util.ProgramDriver;
 
@@ -7,8 +7,8 @@ public class JobDriver {
 		int exitCode = -1;
 		ProgramDriver driver = new  ProgramDriver();
 		try{
-			driver.addClass("DumpJob", DumpJob.class, "dump job");
-			driver.addClass("SyncJob", SyncJob.class, "sync job");
+			driver.addClass("dump", DumpJob.class, "begin the dump job");
+			driver.addClass("sync", SyncJob.class, "clear the dumped files or create the dumped files");
 			
 			driver.driver(args);
 			exitCode = 0;

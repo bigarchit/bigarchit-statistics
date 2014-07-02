@@ -1,4 +1,4 @@
-package com.bigarchit.statistics.dump;
+package com.bigarchit.statistics.dump.job;
 
 import java.net.URI;
 
@@ -24,7 +24,7 @@ public class SyncJob extends Configured implements Tool{
 	public int run(String[] args) throws Exception {
 		String[] otherArgs = new GenericOptionsParser(getConf(), args) .getRemainingArgs();
 		if (otherArgs.length != 3) {
-			System.err.println("Usage: CleanJob <path> <prefix> <option(add, delete)>");
+			System.err.println("Usage: sync <path> <prefix> <option(clear, create)>");
 			return 2;
 		}
 		
@@ -40,10 +40,10 @@ public class SyncJob extends Configured implements Tool{
 		hdfs = FileSystem.get(URI.create(baseDir), getConf());
 		String prefix = args[1];
 		String option = args[2];
-		if(option.equalsIgnoreCase("add")) {
-			PathFilesUtil.addTags(hdfs, prefix, new Path(baseDir));
-		}else if(option.equalsIgnoreCase("delete")) {
-			PathFilesUtil.deleteTags(hdfs, prefix, new Path(baseDir));
+		if(option.equalsIgnoreCase("create")) {
+			PathFilesUtil.createTags(hdfs, prefix, new Path(baseDir));
+		}else if(option.equalsIgnoreCase("clear")) {
+			PathFilesUtil.clearTags(hdfs, prefix, new Path(baseDir));
 		}
 		return 0;
 	}

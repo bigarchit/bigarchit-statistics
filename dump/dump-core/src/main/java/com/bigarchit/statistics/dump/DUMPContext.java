@@ -16,19 +16,20 @@ import org.apache.hadoop.mapreduce.InputFormat;
 import org.apache.hadoop.mapreduce.OutputFormat;
 import org.apache.log4j.Logger;
 
-public class ANTContext {
-	private static final Logger logger = Logger.getLogger(ANTContext.class);
+import com.bigarchit.statistics.dump.inf.Dumper;
+
+public class DUMPContext {
+	private static final Logger logger = Logger.getLogger(DUMPContext.class);
 
 	public final static String LOG_SPILTKEY = ",";
 	public final static String FOR_VALUESPLIT = "::";
 	public final static String FOR_FIELDSPLIT = "||";
 	public final static String FOR_FIELDSPLIT_BY_SPLIT = "\\|\\|";
 
-	private static ANTContext instance;
+	private static DUMPContext instance;
 
-	public final static String DUMPER_KEY = "ant.dumper";
+	public final static String DUMPER_KEY = "statistics.dumper";
 
-	public final static String DUMPER_INPUT_KEY = "ant.dumper.input";
 
 	public final static String MONGODBMAPPING_DATETIME_KEY = "datetime";
 
@@ -57,10 +58,10 @@ public class ANTContext {
 	}
 
 	@SuppressWarnings("unchecked")
-	private ANTContext(Configuration config) {
+	private DUMPContext(Configuration config) {
 		try {
 			if (config == null) {
-				config = new PropertiesConfiguration("ant-dump.properties");
+				config = new PropertiesConfiguration("dump.properties");
 			}
 
 			Set<String> names = new LinkedHashSet<String>();
@@ -88,12 +89,6 @@ public class ANTContext {
 				instance.setOutput(output);
 
 				org.apache.hadoop.conf.Configuration conf = new org.apache.hadoop.conf.Configuration();
-
-				conf.setStrings("ant.dump.input", input);
-				conf.setStrings("ant.dump.output", output);
-
-				conf.setStrings("hadoop.native.lib", "true");
-				conf.setStrings("mapred.job.tracker", "10.13.1.76:8021");
 
 				Iterator<String> confKeys = config.getKeys(prefix + ".config");
 				while (confKeys.hasNext()) {
@@ -136,16 +131,16 @@ public class ANTContext {
 		}
 	}
 
-	public static ANTContext get(Configuration config) {
+	public static DUMPContext get(Configuration config) {
 		if (instance == null) {
-			instance = new ANTContext(config);
+			instance = new DUMPContext(config);
 		}
 		return instance;
 	}
 
-	public static ANTContext get() {
+	public static DUMPContext get() {
 		if (instance == null) {
-			instance = new ANTContext(null);
+			instance = new DUMPContext(null);
 		}
 		return instance;
 	}

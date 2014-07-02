@@ -1,0 +1,33 @@
+<assembly>
+	<id>bin</id>
+	<formats>
+		<format>jar</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<dependencySets>
+		<dependencySet>
+			<useProjectArtifact>false</useProjectArtifact>
+			<outputDirectory>lib</outputDirectory>
+			<includes>
+				<include>org.apache.hadoop:zookeeper</include>
+				<include>com.google.protobuf:protobuf-java</include>
+				<include>org.apache.hbase:hbase</include>
+				<include>joda-time:joda-time</include>
+				<include>org.mongodb:mongo-java-driver</include>
+				<include>org.mongodb:mongo-hadoop-core</include>
+				<include>mysql:mysql-connector-java</include>
+				<include>com.bigarchit.statistics:dump-core</include>
+				<include>com.bigarchit.statistics:dump-mapping</include>
+			</includes>
+		</dependencySet>
+	</dependencySets>
+	<fileSets>
+		<fileSet>
+			<directory>${project.build.directory}/classes</directory>
+			<includes>
+				<include>**</include>
+			</includes>
+			<outputDirectory>/</outputDirectory>
+		</fileSet>
+	</fileSets>
+</assembly>

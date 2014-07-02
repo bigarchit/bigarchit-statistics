@@ -1,0 +1,6 @@
+#mongo db
+mongodb_host=10.19.2.147
+mongodb_port=27017
+mongodb_db=la2test
+
+

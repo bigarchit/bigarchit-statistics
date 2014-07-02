@@ -19,7 +19,7 @@ public class PathFilesUtil {
 	
 	private static final Logger logger = Logger.getLogger(PathFilesUtil.class);
 	
-	public static Set<String> deleteTags(FileSystem hdfs, final String tagPrefix, Path path) throws Exception {
+	public static Set<String> clearTags(FileSystem hdfs, final String tagPrefix, Path path) throws Exception {
 		Set<String> deletetags = new LinkedHashSet<String>();
 		FileStatus[] files = null;
 		try {
@@ -34,7 +34,7 @@ public class PathFilesUtil {
 		}
 		for (FileStatus file : files) {
 			if (file.isDirectory()) {
-				deletetags.addAll(deleteTags(hdfs, tagPrefix, file.getPath()));
+				deletetags.addAll(clearTags(hdfs, tagPrefix, file.getPath()));
 			} else {
 				String filename = file.getPath().toString();
 				if(filename.indexOf("_" + tagPrefix.toUpperCase() + "_DUMP") > -1){
@@ -47,7 +47,7 @@ public class PathFilesUtil {
 	}
 	
 
-	public static Set<String> addTags(FileSystem hdfs, final String tagPrefix, Path path) throws Exception {
+	public static Set<String> createTags(FileSystem hdfs, final String tagPrefix, Path path) throws Exception {
 		Set<String> addtags = new LinkedHashSet<String>();
 		FileStatus[] files = null;
 		try {
@@ -62,7 +62,7 @@ public class PathFilesUtil {
 		}
 		for (FileStatus file : files) {
 			if (file.isDirectory()) {
-				addtags.addAll(addTags(hdfs, tagPrefix, file.getPath()));
+				addtags.addAll(createTags(hdfs, tagPrefix, file.getPath()));
 			} else {
 				String filename = file.getPath().toString();
 
