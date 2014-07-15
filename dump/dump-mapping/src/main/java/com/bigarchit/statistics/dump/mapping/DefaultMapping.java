@@ -10,6 +10,7 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.InputFormat;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.OutputFormat;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.log4j.Logger;
 import org.bson.BSONObject;
 import org.bson.BasicBSONObject;
@@ -76,6 +77,27 @@ public class DefaultMapping implements Dumper<Text, BSONObject> {
 	public Configuration getConfig() {
 		return conf;
 	}
+	
+	@Override
+	public void setMapperClass(Class<Mapper<Writable, Writable, Writable, Writable>> mapperClass) {
+		
+	}
+
+	@Override
+	public Class<Mapper<Writable, Writable, Writable, Writable>> getMapperClass() {
+		return null;
+	}
+
+	@Override
+	public void setReducerClass(Class<Reducer<Writable, Writable, Writable, Writable>> reducerClass) {
+	}
+
+	@Override
+	public Class<Reducer<Writable, Writable, Writable, Writable>> getReducerClass() {
+		return null;
+	}
+	
+	
 
 	@Override
 	public void setInput(String input) {
@@ -158,7 +180,7 @@ public class DefaultMapping implements Dumper<Text, BSONObject> {
 					DB db = mongoIns.getDB(mongoURI.getDatabase());
 					DBCollection coll = db.getCollection(mongoURI.getCollection());
 	
-					coll.remove(new BasicDBObject(DUMPContext.MONGODBMAPPING_DATETIME_KEY, datetime));
+					coll.remove(new BasicDBObject(DUMPContext.DATETIME_KEY, datetime));
 					logger.info(coll + "(" + datetime + ")  had removed");
 	
 					conf.set(DUMPContext.MONGO_OUTPUT_URI_KEY, uri);
@@ -179,8 +201,7 @@ public class DefaultMapping implements Dumper<Text, BSONObject> {
 	}
 	
 	@Override
-	public KVPair<Text, BSONObject> write(Text key, Text value,
-			Mapper<Text, Text, Text, BSONObject>.Context context) {
+	public KVPair<Text, BSONObject> write(Text key, Text value, Mapper<Text, Text, Text, BSONObject>.Context context) {
 		if (key.toString().indexOf(DUMPContext.FOR_FIELDSPLIT) > -1) {
 			BSONObject json = new BasicBSONObject();
 
@@ -199,7 +220,7 @@ public class DefaultMapping implements Dumper<Text, BSONObject> {
 				json.put(k, v);
 			}
 			if (fields.length > 0) {
-				json.put(DUMPContext.MONGODBMAPPING_DATETIME_KEY, Integer.parseInt(context.getConfiguration().get(DUMPContext.MONGODBMAPPING_DATETIME_CONF)));
+				json.put(DUMPContext.DATETIME_KEY, Integer.parseInt(context.getConfiguration().get(DUMPContext.MONGODBMAPPING_DATETIME_CONF)));
 				return new KVPair<Text, BSONObject>(new Text(new ObjectId().toStringMongod()), json);
 			}
 		}
@@ -228,7 +249,6 @@ public class DefaultMapping implements Dumper<Text, BSONObject> {
 				+ outputformat + ", mongo=" + mongo + "]";
 	}
 
-		
 
 	
 }

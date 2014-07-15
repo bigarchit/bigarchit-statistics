@@ -13,7 +13,9 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.InputFormat;
+import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.OutputFormat;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.log4j.Logger;
 
 public class DUMPContext {
@@ -29,7 +31,7 @@ public class DUMPContext {
 	public final static String DUMPER_KEY = "statistics.dumper";
 
 
-	public final static String MONGODBMAPPING_DATETIME_KEY = "datetime";
+	public final static String DATETIME_KEY = "datetime";
 
 	public final static String MONGODBMAPPING_MONGO_URI_KEY = "mapping.mongo.uri";
 
@@ -37,6 +39,8 @@ public class DUMPContext {
 
 	public final static String MONGO_OUTPUT_URI_KEY = "mongo.output.uri";
 
+	public final static String ES_CLUSTER_NAME = "es.cluster.name";
+	
 	private static List<Dumper<Object, Object>> dumpers = new ArrayList<Dumper<Object, Object>>();
 
 	private String formatTime(String path) {
@@ -101,6 +105,14 @@ public class DUMPContext {
 				}
 				instance.setConfig(conf);
 
+				String mapper = config.getString(prefix + ".mapper.class");
+				Class<Mapper<Writable, Writable, Writable, Writable>> mappercls = (Class<Mapper<Writable, Writable, Writable, Writable>>)Class.forName(mapper);
+				instance.setMapperClass(mappercls);
+				
+				String reducer = config.getString(prefix + ".reducer.class");
+				Class<Reducer<Writable, Writable, Writable, Writable>> reducercls = (Class<Reducer<Writable, Writable, Writable, Writable>>)Class.forName(reducer);
+				instance.setReducerClass(reducercls);
+				
 				
 				String inputformat = config.getString(prefix + ".input.format.class");
 				Class<InputFormat<Writable, Writable>> inputformatcls = (Class<InputFormat<Writable, Writable>>)Class.forName(inputformat);

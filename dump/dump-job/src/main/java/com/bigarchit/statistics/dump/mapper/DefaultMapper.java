@@ -1,4 +1,4 @@
-package com.bigarchit.statistics.dump.map;
+package com.bigarchit.statistics.dump.mapper;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,13 +17,11 @@ public class DefaultMapper extends Mapper<Text, Text, Object, Object> {
 	private static List<Dumper<Object, Object>> dumpers = DUMPContext.get().getDumpers();
 	
 	@Override
-	protected void setup(Context context) throws IOException,
-			InterruptedException {
+	protected void setup(Context context) throws IOException, InterruptedException {
 	}
 
 	@Override
-	protected void cleanup(Context context) throws IOException,
-			InterruptedException {
+	protected void cleanup(Context context) throws IOException, InterruptedException {
 	}
 
 	@Override

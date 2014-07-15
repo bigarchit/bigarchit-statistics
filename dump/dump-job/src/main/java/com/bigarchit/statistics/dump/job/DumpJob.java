@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
 import com.bigarchit.statistics.dump.DUMPContext;
 import com.bigarchit.statistics.dump.Dumper;
 import com.bigarchit.statistics.dump.PathFiles;
-import com.bigarchit.statistics.dump.map.DefaultMapper;
+import com.bigarchit.statistics.dump.mapper.DefaultMapper;
+import com.bigarchit.statistics.dump.reducer.DefaultReducer;
 import com.bigarchit.statistics.dump.util.PathFilesUtil;
 
 public class DumpJob {
@@ -50,7 +51,7 @@ public class DumpJob {
 				dumper.getConfig().set("fs.defaultFS", fsname);
 				logger.info("found fsname:" + fsname);
 			}else{
-				
+				throw new RuntimeException("fs.defaultFS is null, please check the input path!");
 			}
 			if(hdfs == null){
 				hdfs = FileSystem.get(URI.create(baseDir), dumper.getConfig());
@@ -64,8 +65,10 @@ public class DumpJob {
 					job.setNumReduceTasks(0);
 			
 					job.setJarByClass(DumpJob.class);
-					job.setMapperClass(DefaultMapper.class);
-			
+					job.setMapperClass(dumper.getMapperClass() == null ? DefaultMapper.class : dumper.getMapperClass());
+					job.setReducerClass(dumper.getReducerClass() == null ? DefaultReducer.class : dumper.getReducerClass());
+					
+					
 					job.setOutputKeyClass(Writable.class);
 					job.setOutputValueClass(Writable.class);
 			
@@ -76,9 +79,19 @@ public class DumpJob {
 					FileOutputFormat.setOutputPath(job, new Path(dumper.getOutput()));
 					
 					if(job != null){
-						job.waitForCompletion(true);
-						FSDataOutputStream out = hdfs.create(new Path(pf.path + "/" + dumper.getName().toUpperCase() + "_DUMPED"), true);
-						out.close();
+						Path lock = new Path(pf.path + "/" + dumper.getName().toUpperCase() + "_LOCK");
+						if(hdfs.exists(lock)){
+							logger.warn(String.format(" %s is dumping ", pf.path));
+						}else{
+							FSDataOutputStream lockOutputStream = hdfs.create(lock, true);
+							lockOutputStream.close();
+							if(job.waitForCompletion(true)){
+								if(hdfs.deleteOnExit(lock)){
+									FSDataOutputStream out = hdfs.create(new Path(pf.path + "/" + dumper.getName().toUpperCase() + "_DUMPED"), true);
+									out.close();
+								}
+							}
+						}
 					}
 					dumper.afterProcessPath(pf);
 				}catch(Exception e){

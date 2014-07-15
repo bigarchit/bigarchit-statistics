@@ -37,7 +37,7 @@ public class PathFilesUtil {
 				deletetags.addAll(clearTags(hdfs, tagPrefix, file.getPath()));
 			} else {
 				String filename = file.getPath().toString();
-				if(filename.indexOf(tagPrefix.toUpperCase() + "_DUMPED") > -1){
+				if(filename.substring(filename.lastIndexOf("/")).equals(tagPrefix.toUpperCase() + "_DUMPED")){
 					hdfs.deleteOnExit(file.getPath());
 					deletetags.add(filename);
 				}

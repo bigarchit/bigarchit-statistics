@@ -6,9 +6,7 @@ import org.apache.hadoop.io.Writable;
 import org.apache.hadoop.mapreduce.InputFormat;
 import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.OutputFormat;
-
-import com.bigarchit.statistics.dump.KVPair;
-import com.bigarchit.statistics.dump.PathFiles;
+import org.apache.hadoop.mapreduce.Reducer;
 
 public interface Dumper<Key, Value> {
 
@@ -20,6 +18,14 @@ public interface Dumper<Key, Value> {
 
 	Configuration getConfig();
 
+	void setMapperClass(Class<Mapper<Writable, Writable, Writable, Writable>> mapperClass);
+	
+	Class<Mapper<Writable, Writable, Writable, Writable>> getMapperClass();
+	
+	void setReducerClass(Class<Reducer<Writable, Writable, Writable, Writable>> reducerClass);
+	
+	Class<Reducer<Writable, Writable, Writable, Writable>> getReducerClass();
+	
 	void setInput(String input);
 
 	String getInput();

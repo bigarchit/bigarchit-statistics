@@ -58,7 +58,7 @@
 			<groupId>com.bigarchit.statistics</groupId>
 			<artifactId>dump-mapping</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
@@ -82,12 +82,9 @@
 			<artifactId>commons-jxpath</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>jdk.tools</groupId>
-			<artifactId>jdk.tools</artifactId>
-			<scope>system</scope>
-			<systemPath>${JAVA_HOME}/lib/tools.jar</systemPath>
-		</dependency>
+		<!-- <dependency> <groupId>jdk.tools</groupId> <artifactId>jdk.tools</artifactId> 
+			<scope>system</scope> <systemPath>${JAVA_HOME}/lib/tools.jar</systemPath> 
+			</dependency> -->
 	</dependencies>
 
 </project>
