@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-<title>大数据统计分析平台</title>
+<title>统计分析平台</title>
 </head>
 
 <body>
@@ -45,14 +45,22 @@
 				<a name="designer-templates" class="anchor" href="#designer-templates">
 				<span class="octicon octicon-link"></span></a>架构图
 			</h3>
-
-			<p><img alt="" src="http://bigarchit.github.io/bigarchit-statistics/images/bigarchit-1.png"></p>
-
+			<img alt="" src="http://bigarchit.github.io/bigarchit-statistics/images/bigarchit_1.png">
+			<p>
+				系统服务，应用等都会产生大量的日志信息，通过flume收容或者爬虫，获取到原始的日志信息。 日志经过ETL层的清洗后， 以一定的数据格式存入HDFS，支持日志收集完成。
+			</p>
+			<p>
+				利用已有的日志，经过一定的算法处理，或者通过hive等工具的个性化检索，就可以获得相应的信息。将这些得到的信息存入中间数据库，在数据库之上，就可以建立各种统计信息系统。
+			</p>
+			
+			<p>
+				同时，也可以在底层加入消息队列，上层加入strom或者sparkstreaming等实时分析框架， 实收收容日志，实时处理， 搭建即时分析系统。
+			</p>
 			<h3>
 				<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick">
 					<span class="octicon octicon-link"></span>
 				</a>
-				Rather Drive Stick?
+				工程架构
 			</h3>
 
 			<p>If you prefer to not use the auto</p>
