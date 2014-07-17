@@ -3,9 +3,23 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>web</artifactId>
 	<packaging>pom</packaging>
+	
+	
+	
 	<parent>
 		<groupId>com.bigarchit.statistics</groupId>
 		<artifactId>bigarchit-statistics</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
+
+
+
+
+
+
+
+
+	<modules>
+		<module>web-cartodb</module>
+	</modules>
 </project>
