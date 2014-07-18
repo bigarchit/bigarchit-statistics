@@ -45,7 +45,7 @@
 				<a name="designer-templates" class="anchor" href="#designer-templates">
 				<span class="octicon octicon-link"></span></a>架构图
 			</h3>
-			<img alt="" src="http://bigarchit.github.io/bigarchit-statistics/images/statistics_1.png">
+			<img alt="总体架构图" src="http://bigarchit.github.io/bigarchit-statistics/images/statistics_1.png">
 			<p>
 				系统服务，应用等都会产生大量的日志信息，通过flume收容或者爬虫，获取到原始的日志信息。 日志经过ETL层的清洗后， 以一定的数据格式存入HDFS，支持日志收集完成。
 			</p>
@@ -68,8 +68,13 @@
 			</p>
 			<h5>dump</h5>			
 			<p>
-				dump 主要负责从hdfs等文件系统中导数据到关系型数据库，非关系型数据库或者其他存储， 方便上次应用程序使用。			
+				dump 主要负责从hdfs等文件系统中导数据到关系型数据库，非关系型数据库或者其他存储， 方便上次应用程序使用。	
 			</p>
+			<p>
+				dump 主类图如下：
+				<img alt="Dump主要类图" src="http://bigarchit.github.io/bigarchit-statistics/images/statistics_2.png">
+			</p>
+			
 			<h5>service</h5>
 			<p>
 				service 负责为db层提供对外的接口，缓存处理等。
