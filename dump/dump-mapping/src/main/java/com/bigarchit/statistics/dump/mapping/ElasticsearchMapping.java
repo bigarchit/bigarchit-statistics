@@ -14,7 +14,6 @@ import org.apache.hadoop.mapreduce.Mapper;
 import org.apache.hadoop.mapreduce.OutputFormat;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.log4j.Logger;
-import org.bson.BSONObject;
 import org.bson.types.ObjectId;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.QueryBuilders;

@@ -1,4 +1,0 @@
-#mongo db
-mongodb_host=10.13.1.76
-mongodb_port=30000
-mongodb_db=la2

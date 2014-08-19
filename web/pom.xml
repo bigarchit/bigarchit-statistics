@@ -4,8 +4,6 @@
 	<artifactId>web</artifactId>
 	<packaging>pom</packaging>
 	
-	
-	
 	<parent>
 		<groupId>com.bigarchit.statistics</groupId>
 		<artifactId>bigarchit-statistics</artifactId>
@@ -13,13 +11,7 @@
 	</parent>
 
 
-
-
-
-
-
-
 	<modules>
-		<module>web-cartodb</module>
+		<module>web-default</module>
 	</modules>
 </project>

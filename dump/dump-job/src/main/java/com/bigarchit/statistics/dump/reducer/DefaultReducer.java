@@ -7,6 +7,4 @@ public class DefaultReducer extends Reducer<Text, Text, Text, Text>{
 
 	
 	
-	
-	
 }

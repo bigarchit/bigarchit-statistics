@@ -9,8 +9,8 @@
 
 	<modules>
 		<module>dump</module>
-		<module>service</module>
 		<module>web</module>
+		<module>service</module>
 	</modules>
 
 	<properties>

@@ -26,6 +26,7 @@ import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.MongoURI;
+import com.mongodb.WriteResult;
 
 public class DefaultMapping implements Dumper<Text, BSONObject> {
 	private static final Logger logger = Logger.getLogger(DefaultMapping.class);
@@ -180,8 +181,8 @@ public class DefaultMapping implements Dumper<Text, BSONObject> {
 					DB db = mongoIns.getDB(mongoURI.getDatabase());
 					DBCollection coll = db.getCollection(mongoURI.getCollection());
 	
-					coll.remove(new BasicDBObject(DUMPContext.DATETIME_KEY, datetime));
-					logger.info(coll + "(" + datetime + ")  had removed");
+					WriteResult result = coll.remove(new BasicDBObject(DUMPContext.DATETIME_KEY, datetime));
+					logger.info(coll + "(" + datetime + ")  had removed [" + result.getN() + "]");
 	
 					conf.set(DUMPContext.MONGO_OUTPUT_URI_KEY, uri);
 					conf.set(DUMPContext.MONGODBMAPPING_DATETIME_CONF, datetime);

@@ -31,7 +31,7 @@ public class DefaultMapper extends Mapper<Text, Text, Object, Object> {
 				KVPair<Object, Object> kv = dumper.write(key, value, context);
 				if (kv != null) {
 					context.write(kv.key, kv.value);
-					context.getCounter("", "writeLine").increment(1);
+					context.getCounter("staitcs-dump", "writeLine").increment(1);
 				}
 			} catch (Exception e) {
 				logger.error("error", e);
